@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     // Navigate to SigninScreenEmail after 7 seconds
-    Future.delayed(const Duration(seconds: 7), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => const SigninScreenEmail(),

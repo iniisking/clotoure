@@ -12,18 +12,50 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/Apple svg.png
+  AssetGenImage get appleSvg =>
+      const AssetGenImage('assets/images/Apple svg.png');
+
+  /// File path: assets/images/Facebook - png 0.png
+  AssetGenImage get facebookPng0 =>
+      const AssetGenImage('assets/images/Facebook - png 0.png');
+
+  /// File path: assets/images/Google - png 0.png
+  AssetGenImage get googlePng0 =>
+      const AssetGenImage('assets/images/Google - png 0.png');
+
+  /// File path: assets/images/back arrow.png
+  AssetGenImage get backArrow =>
+      const AssetGenImage('assets/images/back arrow.png');
+
   /// File path: assets/images/clotoure logo.png
   AssetGenImage get clotoureLogo =>
       const AssetGenImage('assets/images/clotoure logo.png');
 
+  /// File path: assets/images/mail sent.png
+  AssetGenImage get mailSent =>
+      const AssetGenImage('assets/images/mail sent.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [clotoureLogo];
+  List<AssetGenImage> get values =>
+      [appleSvg, facebookPng0, googlePng0, backArrow, clotoureLogo, mailSent];
+}
+
+class $AssetsSvgGen {
+  const $AssetsSvgGen();
+
+  /// File path: assets/svg/back arrow.svg
+  String get backArrow => 'assets/svg/back arrow.svg';
+
+  /// List of all assets
+  List<String> get values => [backArrow];
 }
 
 class Assets {
   Assets._();
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsSvgGen svg = $AssetsSvgGen();
 }
 
 class AssetGenImage {

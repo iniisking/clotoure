@@ -1,8 +1,10 @@
 import 'package:cloture/screens/onboarding%20/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
+  await ScreenUtil.ensureScreenSize();
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +18,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: const SplashScreen(),
+      home: Builder(builder: (context) {
+        ScreenUtil.init(
+          context,
+          designSize: Size(375, 812), // Set your design size
+          minTextAdapt: true, // Ensure this is set for minTextAdapt
+          splitScreenMode: true,
+        );
+        return const SplashScreen();
+      }),
     );
   }
 }
