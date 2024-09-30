@@ -1,4 +1,5 @@
 import 'package:cloture/screens/onboarding%20/about_yourself.dart';
+import 'package:cloture/services/auth_service.dart';
 import 'package:cloture/utilities/buttons.dart';
 import 'package:cloture/utilities/colors.dart';
 import 'package:cloture/utilities/text.dart';
@@ -14,10 +15,49 @@ class CreateAccountScreen extends StatefulWidget {
 }
 
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
+  final AuthService authService = AuthService();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  bool isLoading = false;
+
+  Future<void> SignUp() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    String firstName = firstNameController.text;
+    String lastName = lastNameController.text;
+    String email = emailController.text;
+    String password = passwordController.text;
+    var user = await authService.registerWithEmail(
+      email,
+      password,
+      firstName,
+      lastName,
+    );
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (user != null) {
+      // Sign up successful
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const AboutYourself(),
+        ),
+      );
+    } else {
+      // Show an error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to sign up. Please check your credentials.'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,11 +134,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 Colors.transparent,
                 -0.5,
                 () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const AboutYourself(),
-                    ),
-                  );
+                  SignUp();
                 },
               ),
               SizedBox(
