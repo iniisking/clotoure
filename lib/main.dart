@@ -1,32 +1,39 @@
 import 'package:cloture/screens/onboarding%20/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Firebase
+  await Firebase.initializeApp();
+
+  // Ensure screen size for ScreenUtil
   await ScreenUtil.ensureScreenSize();
+
+  // Run the app after everything is initialized
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
-      home: Builder(builder: (context) {
-        ScreenUtil.init(
-          context,
-          designSize: Size(375, 812), // Set your design size
-          minTextAdapt: true, // Ensure this is set for minTextAdapt
-          splitScreenMode: true,
+    return ScreenUtilInit(
+      designSize: const Size(375, 812), // Set your design size here
+      minTextAdapt: true, // Ensure text adapts
+      splitScreenMode: true, // Enable split screen support
+      builder: (context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            useMaterial3: true,
+          ),
+          home: const SplashScreen(), // Initial screen of the app
         );
-        return const SplashScreen();
-      }),
+      },
     );
   }
 }
