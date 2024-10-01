@@ -1,5 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloture/screens/onboarding%20/about_yourself.dart';
-import 'package:cloture/services/auth_service.dart';
+import 'package:cloture/services/firebase/auth_service.dart';
 import 'package:cloture/utilities/buttons.dart';
 import 'package:cloture/utilities/colors.dart';
 import 'package:cloture/utilities/text.dart';
@@ -22,7 +24,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   TextEditingController emailController = TextEditingController();
   bool isLoading = false;
 
-  Future<void> SignUp() async {
+  Future<void> signUp() async {
     setState(() {
       isLoading = true;
     });
@@ -134,7 +136,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 Colors.transparent,
                 -0.5,
                 () {
-                  SignUp();
+                  signUp();
                 },
               ),
               SizedBox(

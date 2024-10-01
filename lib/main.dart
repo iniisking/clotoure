@@ -1,6 +1,10 @@
 import 'package:cloture/screens/onboarding%20/splash_screen.dart';
+import 'package:cloture/services/bloc/splash/splash_bloc.dart';
+import 'package:cloture/services/bloc/splash/splash_event.dart';
+import 'package:cloture/services/firebase/auth_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
@@ -31,7 +35,12 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             useMaterial3: true,
           ),
-          home: const SplashScreen(), // Initial screen of the app
+          home: BlocProvider(
+            create: (context) => SplashBloc(authService: AuthService())
+              ..add(SplashStart())
+              ..add(CheckAuthenticationEvent()),
+            child: const SplashScreen(),
+          ), // Initial screen of the app
         );
       },
     );

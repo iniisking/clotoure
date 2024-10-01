@@ -1,5 +1,5 @@
 import 'package:cloture/screens/authentication/create_account_screen.dart';
-import 'package:cloture/screens/authentication/signin_screen_password.dart';
+import 'package:cloture/screens/authentication/sign_in_screen_password.dart';
 import 'package:cloture/utilities/buttons.dart';
 import 'package:cloture/utilities/colors.dart';
 import 'package:cloture/utilities/text.dart';

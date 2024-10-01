@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, avoid_returning_null_for_void
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -55,5 +57,10 @@ class AuthService {
   // Auth state change listener
   Stream<User?> get user {
     return _auth.authStateChanges();
+  }
+
+  //method to get current user
+  User? get currentUser {
+    return _auth.currentUser;
   }
 }
