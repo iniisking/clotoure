@@ -24,41 +24,71 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   TextEditingController emailController = TextEditingController();
   bool isLoading = false;
 
+  // Function to sign up the user
   Future<void> signUp() async {
+    // Input validation
+    if (firstNameController.text.isEmpty ||
+        lastNameController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please fill in all the fields.'),
+        ),
+      );
+      return;
+    }
+
     setState(() {
       isLoading = true;
     });
 
-    String firstName = firstNameController.text;
-    String lastName = lastNameController.text;
-    String email = emailController.text;
-    String password = passwordController.text;
-    var user = await authService.registerWithEmail(
-      email,
-      password,
-      firstName,
-      lastName,
-    );
+    String firstName = firstNameController.text.trim();
+    String lastName = lastNameController.text.trim();
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
 
-    setState(() {
-      isLoading = false;
-    });
-
-    if (user != null) {
-      // Sign up successful
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const AboutYourself(),
-        ),
+    try {
+      var user = await authService.registerWithEmail(
+        email,
+        password,
+        firstName,
+        lastName,
       );
-    } else {
-      // Show an error message
+
+      if (user != null) {
+        // Sign up successful, navigate to AboutYourself screen
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const AboutYourself(),
+          ),
+        );
+      } else {
+        // Show an error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Sign up failed. Please try again.'),
+          ),
+        );
+      }
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Failed to sign up. Please check your credentials.'),
-        ),
+        SnackBar(content: Text(e.toString())),
       );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
+  }
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -124,21 +154,26 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
               SizedBox(
                 height: 40.h,
               ),
-              appButton(
-                'Continue',
-                primary200,
-                white100,
-                47.h,
-                344.w,
-                100.r,
-                16.sp,
-                FontWeight.w500,
-                Colors.transparent,
-                -0.5,
-                () {
-                  signUp();
-                },
-              ),
+              isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                      color: primary200,
+                    ))
+                  : appButton(
+                      'Continue',
+                      primary200,
+                      white100,
+                      47.h,
+                      344.w,
+                      100.r,
+                      16.sp,
+                      FontWeight.w500,
+                      Colors.transparent,
+                      -0.5,
+                      () {
+                        signUp();
+                      },
+                    ),
               SizedBox(
                 height: 40.h,
               ),
