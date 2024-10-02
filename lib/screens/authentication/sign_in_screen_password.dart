@@ -26,6 +26,16 @@ class _SigninScreenPasswordState extends State<SigninScreenPassword> {
   final AuthService authService = AuthService();
   bool isLoading = false;
 
+  // Variable to toggle password visibility
+  bool isPasswordVisible = false;
+
+  // Function to toggle password visibility
+  void togglePasswordVisibility() {
+    setState(() {
+      isPasswordVisible = !isPasswordVisible;
+    });
+  }
+
   Future<void> signIn() async {
     setState(() {
       isLoading = true;
@@ -78,6 +88,15 @@ class _SigninScreenPasswordState extends State<SigninScreenPassword> {
                 controller: passwordController,
                 keyboardType: TextInputType.visiblePassword,
                 textInputAction: TextInputAction.done,
+                obscureText: !isPasswordVisible,
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    togglePasswordVisibility();
+                  },
+                  icon: Icon(
+                    isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                  ),
+                ),
               ),
               SizedBox(
                 height: 16.h,

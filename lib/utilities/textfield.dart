@@ -11,6 +11,7 @@ Widget authTextField({
   String? Function(String?)? validator,
 }) {
   return TextFormField(
+    obscureText: obscureText ?? false,
     textInputAction: textInputAction,
     keyboardType: keyboardType,
     controller: controller,
@@ -36,6 +37,17 @@ Widget authTextField({
           width: 2,
         ),
       ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: const BorderSide(color: Colors.red),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: const BorderSide(
+          color: Colors.red,
+        ),
+      ),
+      suffixIcon: suffixIcon,
     ),
   );
 }

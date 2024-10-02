@@ -23,22 +23,19 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   bool isLoading = false;
+  final _formKey = GlobalKey<FormState>();
+  // Variable to toggle password visibility
+  bool isPasswordVisible = false;
+
+  // Function to toggle password visibility
+  void togglePasswordVisibility() {
+    setState(() {
+      isPasswordVisible = !isPasswordVisible;
+    });
+  }
 
   // Function to sign up the user
   Future<void> signUp() async {
-    // Input validation
-    if (firstNameController.text.isEmpty ||
-        lastNameController.text.isEmpty ||
-        emailController.text.isEmpty ||
-        passwordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please fill in all the fields.'),
-        ),
-      );
-      return;
-    }
-
     setState(() {
       isLoading = true;
     });
@@ -118,38 +115,84 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 TextAlign.left,
               ),
               SizedBox(height: 32.h),
-              authTextField(
-                hintText: 'First Name',
-                controller: firstNameController,
-                keyboardType: TextInputType.name,
-                textInputAction: TextInputAction.next,
-              ),
-              SizedBox(
-                height: 16.h,
-              ),
-              authTextField(
-                hintText: 'Last Name',
-                controller: lastNameController,
-                keyboardType: TextInputType.name,
-                textInputAction: TextInputAction.next,
-              ),
-              SizedBox(
-                height: 16.h,
-              ),
-              authTextField(
-                hintText: 'Email',
-                controller: emailController,
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-              ),
-              SizedBox(
-                height: 16.h,
-              ),
-              authTextField(
-                hintText: 'Password',
-                controller: passwordController,
-                keyboardType: TextInputType.visiblePassword,
-                textInputAction: TextInputAction.done,
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    authTextField(
+                      hintText: 'First Name',
+                      controller: firstNameController,
+                      keyboardType: TextInputType.name,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your first name';
+                        } else if (value.length < 2) {
+                          return 'First name must be at least 2 characters';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 16.h,
+                    ),
+                    authTextField(
+                        hintText: 'Last Name',
+                        controller: lastNameController,
+                        keyboardType: TextInputType.name,
+                        textInputAction: TextInputAction.next,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your last name';
+                          } else if (value.length < 2) {
+                            return 'Last name must be at least 2 characters';
+                          }
+                          return null;
+                        }),
+                    SizedBox(
+                      height: 16.h,
+                    ),
+                    authTextField(
+                        hintText: 'Email',
+                        controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email';
+                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                              .hasMatch(value)) {
+                            return 'Please enter a valid email address';
+                          }
+                          return null;
+                        }),
+                    SizedBox(
+                      height: 16.h,
+                    ),
+                    authTextField(
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: togglePasswordVisibility,
+                        ),
+                        hintText: 'Password',
+                        controller: passwordController,
+                        keyboardType: TextInputType.visiblePassword,
+                        textInputAction: TextInputAction.done,
+                        obscureText: !isPasswordVisible,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your password';
+                          } else if (value.length < 6) {
+                            return 'Password must be at least 6 characters';
+                          }
+                          return null;
+                        }),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 40.h,
@@ -171,7 +214,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       Colors.transparent,
                       -0.5,
                       () {
-                        signUp();
+                        if (_formKey.currentState!.validate()) {
+                          signUp();
+                        }
                       },
                     ),
               SizedBox(
