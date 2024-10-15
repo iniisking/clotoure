@@ -1,8 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:cloture/screens/authentication/forgot_password.dart';
-import 'package:cloture/screens/home/home_page..dart';
 import 'package:cloture/services/firebase/auth_service.dart';
+import 'package:cloture/utilities/bottom_nav_screen.dart';
 import 'package:cloture/utilities/buttons.dart';
 import 'package:cloture/utilities/colors.dart';
 import 'package:cloture/utilities/text.dart';
@@ -52,7 +52,7 @@ class _SigninScreenPasswordState extends State<SigninScreenPassword> {
       // Sign in successful
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const HomePage(),
+          builder: (context) => const BottomNavScreen(),
         ),
       );
     } else {
@@ -74,6 +74,12 @@ class _SigninScreenPasswordState extends State<SigninScreenPassword> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              backButton(() {
+                Navigator.of(context).pop();
+              }),
+              SizedBox(
+                height: 20.h,
+              ),
               reusableText(
                 'Sign in',
                 32.sp,

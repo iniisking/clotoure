@@ -1,4 +1,4 @@
-import 'package:cloture/screens/onboarding%20/splash_screen.dart';
+import 'package:cloture/screens/onboarding%20/about_yourself.dart';
 import 'package:cloture/services/bloc/splash/splash_bloc.dart';
 import 'package:cloture/services/bloc/splash/splash_event.dart';
 import 'package:cloture/services/firebase/auth_service.dart';
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
             create: (context) => SplashBloc(authService: AuthService())
               ..add(SplashStart())
               ..add(CheckAuthenticationEvent()),
-            child: const SplashScreen(),
+            child: const AboutYourself(),
           ), // Initial screen of the app
         );
       },

@@ -1,5 +1,4 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:cloture/screens/authentication/create_account_screen.dart';
 import 'package:cloture/screens/authentication/sign_in_screen_password.dart';
 import 'package:cloture/utilities/buttons.dart';
@@ -24,32 +23,20 @@ class _SigninScreenEmailState extends State<SigninScreenEmail> {
   bool isLoading = false;
 
   Future<void> checkEmail() async {
-    String email = emailController.text.trim(); // Ensure trimming
+    // Convert email to lowercase to avoid case sensitivity issues
+    String email = emailController.text.trim().toLowerCase();
 
     setState(() {
       isLoading = true;
     });
 
     try {
-      // Debugging output
-      print('Checking email: $email');
-
-      // Fetch sign-in methods for the email
+      // Attempt to fetch sign-in methods for the email
       List<String> signInMethods =
           await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
 
-      // Debugging output
-      print('Sign-in methods: $signInMethods');
-
-      if (signInMethods.isEmpty) {
-        // Email is not registered
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Email is not registered. Please create an account.'),
-          ),
-        );
-      } else {
-        // Email exists, proceed to the password screen
+      if (signInMethods.contains('password')) {
+        // Email is registered with password sign-in method, proceed to password screen
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => SigninScreenPassword(
@@ -57,11 +44,41 @@ class _SigninScreenEmailState extends State<SigninScreenEmail> {
             ),
           ),
         );
+      } else if (signInMethods.isNotEmpty) {
+        // Email is registered with another provider (Google, Facebook, etc.)
+        String provider = signInMethods.join(', ');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+                'This email is registered with $provider. Please use that sign-in method.'),
+          ),
+        );
+      } else {
+        // Email is not registered
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Email is not registered. Please create an account.'),
+          ),
+        );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${e.toString()}')),
-      );
+      // Handle Firebase-specific errors
+      if (e is FirebaseAuthException) {
+        print('FirebaseAuthException: ${e.message}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('FirebaseAuth error: ${e.message}'),
+          ),
+        );
+      } else {
+        // Handle other errors
+        print('Error: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('An unexpected error occurred: $e'),
+          ),
+        );
+      }
     } finally {
       setState(() {
         isLoading = false;

@@ -24,6 +24,10 @@ class $AssetsImagesGen {
   AssetGenImage get googlePng0 =>
       const AssetGenImage('assets/images/Google - png 0.png');
 
+  /// File path: assets/images/arrow down.png
+  AssetGenImage get arrowDown =>
+      const AssetGenImage('assets/images/arrow down.png');
+
   /// File path: assets/images/back arrow.png
   AssetGenImage get backArrow =>
       const AssetGenImage('assets/images/back arrow.png');
@@ -32,13 +36,61 @@ class $AssetsImagesGen {
   AssetGenImage get clotoureLogo =>
       const AssetGenImage('assets/images/clotoure logo.png');
 
+  /// File path: assets/images/home.png
+  AssetGenImage get home => const AssetGenImage('assets/images/home.png');
+
+  /// File path: assets/images/love icon.png
+  AssetGenImage get loveIcon =>
+      const AssetGenImage('assets/images/love icon.png');
+
   /// File path: assets/images/mail sent.png
   AssetGenImage get mailSent =>
       const AssetGenImage('assets/images/mail sent.png');
 
+  /// File path: assets/images/notification.png
+  AssetGenImage get notification =>
+      const AssetGenImage('assets/images/notification.png');
+
+  /// File path: assets/images/order.png
+  AssetGenImage get order => const AssetGenImage('assets/images/order.png');
+
+  /// File path: assets/images/profile pic.png
+  AssetGenImage get profilePic =>
+      const AssetGenImage('assets/images/profile pic.png');
+
+  /// File path: assets/images/profile.png
+  AssetGenImage get profile => const AssetGenImage('assets/images/profile.png');
+
+  /// File path: assets/images/search.png
+  AssetGenImage get search => const AssetGenImage('assets/images/search.png');
+
+  /// File path: assets/images/searchnormal1.png
+  AssetGenImage get searchnormal1 =>
+      const AssetGenImage('assets/images/searchnormal1.png');
+
+  /// File path: assets/images/shopping bag.png
+  AssetGenImage get shoppingBag =>
+      const AssetGenImage('assets/images/shopping bag.png');
+
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [appleSvg, facebookPng0, googlePng0, backArrow, clotoureLogo, mailSent];
+  List<AssetGenImage> get values => [
+        appleSvg,
+        facebookPng0,
+        googlePng0,
+        arrowDown,
+        backArrow,
+        clotoureLogo,
+        home,
+        loveIcon,
+        mailSent,
+        notification,
+        order,
+        profilePic,
+        profile,
+        search,
+        searchnormal1,
+        shoppingBag
+      ];
 }
 
 class $AssetsSvgGen {
@@ -47,8 +99,11 @@ class $AssetsSvgGen {
   /// File path: assets/svg/back arrow.svg
   String get backArrow => 'assets/svg/back arrow.svg';
 
+  /// File path: assets/svg/search.svg
+  String get search => 'assets/svg/search.svg';
+
   /// List of all assets
-  List<String> get values => [backArrow];
+  List<String> get values => [backArrow, search];
 }
 
 class Assets {
