@@ -1,4 +1,4 @@
-import 'package:cloture/screens/home/men/categories.dart';
+import 'package:cloture/screens/home/men/categories_men.dart';
 import 'package:cloture/utilities/shimmers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
