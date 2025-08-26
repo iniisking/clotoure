@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "991163575225",
+    "project_id": "clouture-ad49b",
+    "storage_bucket": "clouture-ad49b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:991163575225:android:f0a3f24627b7147b1ee468",
+        "android_client_info": {
+          "package_name": "com.example.cloture"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgs3eyeQnRRSkhcxbxRDmkqIcM1Ds0Xm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
